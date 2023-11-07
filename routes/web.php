@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/articles', function () {
+//     return 'Article List';
+// });
+
+// Route::get('/articles/detail', function () {
+//     return 'Article Detail';
+// });
+
+// Route::get('/articles/detail/{id}', function ($id) {
+//     return "Article Detail - $id";
+// })->name('article.detail');
+
+// Route::get('/articles/more', function(){
+//     return redirect('/articles/detail');
+// });
+
+Route::get('/articles/more', function () {
+    return redirect()->route('article.detail');
 });
+
+Route::get('/', [ArticleController::class, 'index']);
+
+Route::get('/articles', [ArticleController::class, 'index']);
+
+Route::get('/articles/detail/{id}', [ArticleController::class, 'detail']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
