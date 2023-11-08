@@ -38,7 +38,8 @@ class ArticleController extends Controller
         // $articles = Http::get('https://jsonplaceholder.typicode.com/posts');
         // return view('articles/index')->with('articles', json_decode($articles, true));;
 
-        $data = Article::all();
+        // $data = Article::all();
+        $data = Article::latest()->paginate(5);
         return view('articles.index', [
             'articles' => $data
         ]);
@@ -46,6 +47,10 @@ class ArticleController extends Controller
 
     public function detail($id)
     {
-        return "Cotnroller - Article Detail - $id";
+        $data = Article::find($id);
+        return view('articles.detail', [
+            'article' => $data
+        ]);
+        // return "Cotnroller - Article Detail - $id";
     }
 }
