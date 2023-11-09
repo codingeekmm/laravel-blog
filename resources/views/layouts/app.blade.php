@@ -27,6 +27,7 @@
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <!-- Left Side Of Navbar -->
+                @auth
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link text-success" href="{{ url('/articles/add') }}">
@@ -34,6 +35,7 @@
                         </a>
                     </li>
                 </ul>
+                @endauth
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
