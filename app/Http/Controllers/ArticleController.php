@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Support\Facades\Http;
 
 class ArticleController extends Controller
@@ -52,5 +53,38 @@ class ArticleController extends Controller
             'article' => $data
         ]);
         // return "Cotnroller - Article Detail - $id";
+    }
+
+    public function add()
+    {
+        $data = Category::all();
+        return view('articles.add', [
+            'categories' => $data
+        ]);
+    }
+
+    public function create()
+    {
+        $validator = validator(request()->all(), [
+            'title' => 'required',
+            'body' => 'required',
+            'category_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+        $article = new Article;
+        $article->title = request()->title;
+        $article->body = request()->body;
+        $article->category_id = request()->category_id;
+        $article->save();
+        return redirect('/articles');
+    }
+
+    public function delete($id)
+    {
+        $article = Article::find($id);
+        $article->delete();
+        return redirect('/articles')->with('info', 'Article deleted');
     }
 }
